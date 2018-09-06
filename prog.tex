@@ -1,0 +1,460 @@
+\documentclass[11pt, a5paper]{article}
+
+\usepackage[T2A]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[english, russian]{babel}
+\usepackage{amssymb, amsfonts, amsmath}
+\usepackage{mathtext}
+\usepackage{comment}
+\usepackage{graphicx}
+\usepackage{listings}
+\usepackage{geometry}
+\usepackage{lscape}
+\usepackage{wrapfig}
+\usepackage[indentfirst, pagestyles, explicit]{titlesec}
+\usepackage{longtable}
+
+\usepackage{tikz}
+\usetikzlibrary{patterns}		%draw pictures: fill
+\usetikzlibrary{calc}			%draw pictures: coordinate calc
+% \usetikzlibrary{external}		%draw pictures: cache pitcures
+% \tikzexternalize				%cache pictures
+\usepackage{listofitems}		%list of arguments (pictures)
+\usepackage{enumitem}			%enumarate parameters
+
+\geometry{left=1cm, right=1cm, top=2cm, bottom=2cm, twoside}
+
+\titleformat{\section}{\Large\bfseries\center}{}{0pt}{#1}
+\titleformat{\subsection}{\Large\bfseries\center}{}{0pt}{#1}
+
+\newpagestyle{mystyle}{
+	\headrule
+	\sethead[\sectiontitle][][]
+			{}{}{\subsectiontitle}
+	\setfoot[\thepage][][]
+			{}{}{\thepage}
+}
+
+\lstset{language=C++}
+\lstset{basicstyle=\footnotesize\ttfamily} 
+\lstset{keywordstyle=\color{blue}}
+\lstset{frame=single}
+\lstset{numbers=left}
+
+\sloppy
+
+\newcommand{\accept}[2]{
+	\centerline{\boxed{#1}}
+	\newline
+	\centerline{\scriptsize{#2}}
+}
+\newcommand{\reject}[1]{
+	\centerline{#1}
+}
+
+\newcommand{\informat}[1]
+{
+	\paragraph{Ввод.\\} #1
+}
+
+\newcommand{\outformat}[1]
+{
+	\paragraph{Вывод.\\} #1
+}
+
+\newcommand{\example}[2]
+{
+	\paragraph{Пример.\\}
+	{\tt
+	\begin{tabular}{|p{0.4\linewidth}|p{0.4\linewidth}|}
+	\hline
+	Ввод & Вывод \\
+	\hline
+	#1 & #2		\\
+	\hline
+	\end{tabular}
+	}
+}
+
+\newcommand{\examplee}[4]
+{
+	\paragraph{Пример.\\}
+	{\tt
+	\begin{tabular}{|p{0.4\linewidth}|p{0.4\linewidth}|}
+	\hline
+	Ввод 	& Вывод  	\\
+	\hline
+	#1 		& #2 		\\
+	\hline
+	#3		& #4		\\
+	\hline
+	\end{tabular}
+	}
+}
+
+\newcommand{\examplEEE}[6]
+{
+	\paragraph{Пример.\\}
+	{\tt
+	\begin{tabular}{|p{0.5\linewidth}|p{0.3\linewidth}|}
+	\hline
+	Ввод 	& Вывод  	\\
+	\hline
+	#1 		& #2 		\\
+	\hline
+	#3		& #4		\\
+	\hline
+	#5		& #6		\\
+	\hline
+	\end{tabular}
+	}
+}
+
+\newcommand{\exampleee}[6]
+{
+	\paragraph{Пример.\\}
+	{\tt
+	\begin{tabular}{|p{0.4\linewidth}|p{0.4\linewidth}|}
+	\hline
+	Ввод 	& Вывод  	\\
+	\hline
+	#1 		& #2 		\\
+	\hline
+	#3		& #4		\\
+	\hline
+	#5		& #6		\\
+	\hline
+	\end{tabular}
+	}
+}
+
+\newcommand{\exampleeee}[8]
+{
+	\paragraph{Пример.\\}
+	{\tt
+	\begin{tabular}{|p{0.4\linewidth}|p{0.4\linewidth}|}
+	\hline
+	Ввод 	& Вывод  	\\
+	\hline
+	#1 		& #2 		\\
+	\hline
+	#3		& #4		\\
+	\hline
+	#5		& #6		\\
+	\hline
+	#7		& #8		\\
+	\hline
+	\end{tabular}
+	}
+}
+
+\newcommand{\exampleeeee}[5]
+{
+	\paragraph{Пример.\\}
+	{\tt
+	\begin{tabular}{|p{0.4\linewidth}|p{0.4\linewidth}|}
+	\hline
+	Ввод 	& Вывод  	\\
+	\hline
+	#1		\\
+	\hline
+	#2		\\
+	\hline
+	#3		\\
+	\hline
+	#4		\\
+	\hline
+	#5		\\
+	\hline
+	\end{tabular}
+	}
+}
+
+\newcommand{\examplepic}[3]
+{
+	\subsection*{Пример.}
+	{\tt
+	\noindent
+	\begin{tabular}{|p{0.1\linewidth}|p{0.1\linewidth}|p{0.5\linewidth}|}
+	\hline
+	Ввод 	& Вывод  	& Пояснение\\
+	\hline
+	#1 		& #2 		& #3\\
+	\hline
+	\end{tabular}
+	}
+}
+
+
+\newcommand{\excomm}[1]
+{
+	\paragraph{Комментарий. \\}
+	\textit{#1}
+}
+
+\renewcommand{\tabcolsep}{0.1cm}
+\def\arraystretch{2}
+
+\newcommand{\result}[2]
+{
+	\begin{landscape}
+	\begin{center}
+
+	\begin{large}
+		Результаты\\
+		#2\\
+		\vspace{0.5cm}
+	\end{large}	
+	
+	\begin{tiny}
+	\input{results/#1}
+	\end{tiny}
+	\end{center}
+	\end{landscape}
+	\newpage
+}
+\newcommand{\resultind}[2]
+{
+	\newpage
+	\begin{center}
+
+	\begin{large}
+		Результаты\\
+		#2\\
+		\vspace{0.5cm}
+	\end{large}	
+	
+	\begin{tiny}
+	\input{results/#1}
+	\end{tiny}
+	\end{center}
+	\newpage
+}
+
+\newcommand{\problemauthor}[1]{
+\begin{flushright}
+\textit{Автор: #1}
+\end{flushright}
+}
+
+\newcommand{\problemofferer}[1]{
+\begin{flushright}
+\textit{Предложил: #1}
+\end{flushright}
+}
+
+\newcommand{\head}[2]
+{
+    \subsection{#1}
+    \begin{center}
+	#2
+	\end{center}
+}
+
+
+\begin{document}
+
+\begin{titlepage}
+\begin{center}
+\vfill
+
+Московский государственный университет имени М.В.~Ломоносова\\
+Казахстанский филиал\\
+
+\vfill
+
+\begin{Large}
+\textbf{Студенческие олимпиады по программированию\\
+Казахстанского филиала МГУ. \\
+Задачи и указания.\\
+2013--2018 гг.\\
+}
+\end{Large}
+
+\vfill
+
+Астана\\
+2018
+
+\end{center}
+\end{titlepage}
+
+\setcounter{page}{2}
+
+
+\thispagestyle{empty}
+
+\noindent{\bf УДК} \\
+{\bf ББК}\\
+{\bf Л}
+\vspace{0.7 cm}
+
+{\bf Рецензент:}
+
+кандидат физико--математических наук, доцент кафедры математики и информатики Казахстанского филиала МГУ имени М.~В.~Ломоносова Нетесов~В.~В.
+
+\vspace{0.5 cm}
+
+{\bf Авторы:}
+
+преподаватели Казахстанского филиал МГУ имени М.~В.~Ломоносова Абдикалыков~А.~К., Баев~А.~Ж.
+
+\vspace{0.5 cm}
+
+{\bf TeX--верстка:}
+
+Баев~А.~Ж.
+
+\vspace{0.5 cm}
+
+В настоящем сборнике представлены 113 задач с указаниями, которые предлагались на 13 студенческих олимпиадах по программированию Казахстанского филиала МГУ имени М.В.Ломоносова за период с 2013 по 2018 год. 
+
+Сборник  адресован  всем интересующимся олимпиадным движением.
+
+\vspace{0.5 cm}
+
+
+{\bf ISBN}  
+
+\newpage
+\section{Предисловие}
+
+Традиция ежегодных студенческих олимпиад Казахстанского филиала МГУ по программированию зародилась со дня открытия филиала в 2001 году. Олимпиады проводились один раз в год в декабре при непосредственном участии доцента кафедры математики и информатики Казахстанского филиала МГУ Нетесова Виктора Викторовича и удаленном участии доцента кафедры системного программирования факультета ВМК Чернова Александра Владимировича, который является автором известной системы для проведения олимпиад по программированию ejudge. 
+
+С 2013-2014 учебного года олимпиада разделилась на весенний и осенний тур с командным участием, а в 2015-2016 учебном году добавился индивидуальный тур с индивидуальным участием. С 2015 года олимпиада проводится с онлайн--версией, что позволяет принять участие в олимпиаде участникам из других городов, в частности студентам 3--4 курса Казахстанского филиала МГУ, которые обучаются в Москве. За последние годы в олимпиаде принимали участие студенты учебных заведений Казахстана (Астана, Алматы) и городов других стран (Москва, Ташкент).
+
+В данном сборнике содержится 113 задач, которые были предложены на девяти олимпиадах филиала МГУ в период с 2013 по 2018 год. Значительная часть задач была разработана и подготовлена преподавателями Казахстанского филиала МГУ имени М.В.~Ломоносова Абдикалыковым Абдикожой Кожанасиридиновичем и Баевым Аленом Жуматаевичем. 
+
+Активное участие в подготовке олимпиад принимали и самми студенты. Так, большую помощь в организации олимпиады 2012 года оказал студент четвертого курса ВМК Максимец Илья. Зимний тур 2015 года подготовили студенты второго курса: Камалбеков Тимур, Журавская Александра, Абайулы Ерулан и Жусупов Али. А зимний тур 2017 года: Аскергалиев Ануар, Бекмаганбетов Бекарыс и Шарипов Азат.
+
+Авторы выражают благодарность всем студентам, кто принимал участие в олимпиадах филиала.
+
+\begin{flushright}
+Директор Казахстанского филиала
+
+А.В.Сидорович
+\end{flushright}
+
+\newpage
+
+\pagestyle{mystyle}
+
+\tableofcontents
+
+\newpage
+
+\section{Команды Филиала на чемпионате ACM~ICPC}
+
+\input{history.tex}
+
+\newpage
+
+\section{Условия задач и результаты}
+
+Во всех задачах до 2017 года были использованы ограничения по времени в 1 секунду, по памяти в 64 Мб. На задачи с 2018 года ограничения по времени в 1 секунду, по памяти в 512 Мб. На олимпиадах всегда гарантировалось наличие решения на языках pascal, C и С++, которые укладываются в данные ограничения. 
+
+\makeatletter
+\def\input@path{{problems/}}
+\makeatother
+
+\head{Зимний тур 2013}{11 декабря 2013}
+\input{problems/2013-12}
+\result{2013-12}{11 декабря 2013}
+
+\head{Весенний тур 2014}{17 марта 2014}
+\input{problems/2014-03}
+\result{2014-03}{17 марта 2014}
+
+\head{Зимний тур 2014}{9 декабря 2014}
+\input{problems/2014-12}
+\result{2014-12}{9 декабря 2014}
+
+\head{Весенний тур 2015}{18 марта 2015}
+\input{problems/2015-03}
+\result{2015-03}{18 марта 2015}
+
+\head{Осенний тур 2015}{20 октября 2015}
+\input{problems/2015-10}
+\result{2015-10}{20 октября 2015}
+
+\head{Зимний тур 2015}{18 декабря 2015}
+\input{problems/2015-12}
+\resultind{2015-12}{18 декабря 2015}
+
+\head{Весенний тур 2016}{30 апреля 2016}
+\input{problems/2016-04}
+\result{2016-04}{30 апреля 2016}
+
+\head{Осенний тур 2016}{15 октября 2016}
+\input{problems/2016-10}
+\result{2016-10}{15 октября 2016}
+
+\head{Зимний тур 2016}{13 декабря 2016}
+\input{problems/2016-12}
+\resultind{2016-12}{13 декабря 2016}
+
+\head{Весенний тур 2017}{31 мая 2017}
+\input{problems/2017-05}
+\result{2017-05}{31 мая 2017}
+
+\head{Осенний тур 2017}{28 октября 2017}
+\input{problems/2017-10}
+\result{2017-10}{28 октября 2017}
+
+\head{Зимний тур 2017}{19 декабря 2017}
+\input{problems/2017-12}
+\resultind{2017-12}{19 декабря 2017}
+
+\head{Весенний тур 2018}{19 мая 2018}
+\input{problems/2018-05}
+\result{2018-05}{19 мая 2018}
+
+\newpage
+
+\section{Указания}
+
+\head{Зимний тур 2013}{11 декабря 2013}
+\input{solutions/2013-12}
+
+\head{Весенний тур 2014}{17 марта 2014}
+\input{solutions/2014-03}
+
+\head{Зимний тур 2014}{9 декабря 2014}
+\input{solutions/2014-12}
+
+\head{Весенний тур 2015}{18 марта 2015}
+\input{solutions/2015-03}
+
+\head{Осенний тур 2015}{20 октября 2015}
+\input{solutions/2015-10}
+
+\head{Зимний тур 2015}{18 декабря 2015}
+\input{solutions/2015-12}
+
+\head{Весенний тур 2016}{30 апреля 2016}
+\input{solutions/2016-04}
+
+\head{Осенний тур 2016}{15 октября 2016}
+\input{solutions/2016-10}
+
+\head{Зимний тур 2016}{13 декабря 2016}
+\input{solutions/2016-12}
+
+\head{Весенний тур 2017}{31 мая 2017}
+\input{solutions/2017-05}
+
+\head{Осенний тур 2017}{28 октября 2017}
+\input{solutions/2017-10}
+
+\head{Зимний тур 2017}{19 декабря 2017}
+\input{solutions/2017-12}
+
+\head{Весенний тур 2018}{19 мая 2018}
+\input{solutions/2018-05}
+
+\newpage
+
+\section{Тематический указатель}
+
+\input{themes}
+\end{document} 
